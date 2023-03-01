@@ -1,0 +1,32 @@
+.login{
+    height: 500px;
+    width:400px;
+    background-color: black;
+    margin-top: 200px;
+    margin-left: 550px;
+    border-radius: 10px;
+  }
+  /* heading in login */
+  .login h1{
+    color: white;
+    font-size: 44px;
+    padding-left: 145px;
+  }
+  /* form starting */
+  .login form{
+    padding-top: 20px;
+    padding-left: 40px;
+  }
+  
+  .login form .button {
+    padding-top: 30px;
+  }
+  .login form .button button{
+    height: 40px;
+    width: 300px;
+    background-color: rgb(65, 64, 64);
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+  
+  }

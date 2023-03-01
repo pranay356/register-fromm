@@ -1,0 +1,54 @@
+.register{
+    height: 800px;
+    width: 400px;
+    background-color: black;
+    margin-top: 100px;
+    margin-left: 550px;
+    border-radius: 10px;
+}
+.register h1{
+    color: white;
+    font-size: 44px;
+    padding-left: 121px;
+
+}
+.register .form{
+    padding-top: 20px;
+    padding-left: 40px;
+
+}
+.register .form .label label{
+    color: white;
+    font-size: 15px;
+    font-family:sans-serif;   
+
+}
+.register .form .input input{
+    height: 40px;
+    width: 300px;
+    background-color: #000000;
+    border: 0.1px solid rgb(120, 115, 115);
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: white;
+
+}
+
+.register .form .gender{
+    color: white;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.register .form .button{
+    padding-top: 30px;
+
+}
+.register .form .button button{
+    height: 40px;
+    width: 300px;
+    background-color: rgb(65, 64, 64);
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+
+}
