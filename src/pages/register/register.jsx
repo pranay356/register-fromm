@@ -1,147 +1,120 @@
 import React from "react";
 import "./register.css";
-import { useState } from "react";
+import {useFormik} from 'formik';
+import * as Yup from "yup";
+
 
 import FormGroup from "../../components/Form/formGroup";
 import Button from "../../components/Button/button";
 
 function Register() {
-  const [values, setValues] = useState({
-    username: "",
-    firstName: "",
-    lastName: "",
-    gender: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [errors, setErrors] = useState({
-    username: "",
-    firstName: "",
-    lastName: "",
-    gender: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors(validation(values));
-  };
-  const validation = (values) => {
-    let errors = {};
-    if (!values.username) {
-      errors.username = "please enter a username";
-    } else if (values.username.length < 5) {
-      errors.username = "username must be at least 5 characters";
-    }
-    if (!values.firstName) {
-      errors.firstName = "please enter a first name";
-    } else if (values.firstName.length <= 3) {
-      errors.firstName = "enter valid name";
-    }
-    if (!values.lastName) {
-      errors.lastName = "please enter a last name";
-    } else if (values.lastName.length <= 3) {
-      errors.lastName = "enter valid name";
-    }
+  const formik = useFormik({
+    initialValues: {
+     username:"",
+     firstName:"",
+     lastName:"",
+     gender:"",
+     password:"",
+     confirmPassword:"", 
+    },
+    validationSchema:Yup.object({
+      username:Yup.string()
+      .min(5,"minimum 5 character")
+      .max(20,"maximum 20 character")
+      .required("required"),
+      firstName:Yup.string()
+      .min(10,"minimum 10 character")
+      .required("required"),
+      lastName:Yup.string()
+      .min(15,"minimum 15 character")
+      .required("required"),
+      gender:Yup.string()
+      .required("required"),
+      password:Yup.string()
+      .min(7,"maximum 7 character")
+      .required("required"),
+      confirmPassword:Yup.string()
+      .required("required")
+      .oneOf([Yup.ref("password")],"password does not match")
 
-    if (!values.password) {
-      errors.password = "please enter a password";
-    } else if (values.username.length < 9) {
-      errors.password = "password must be at least 9 characters";
-    }
-    if (!values.gender) {
-      errors.gender = "please select gender";
-    } else if (values.gender.male || values.gender.female) {
-      errors.gender = "great";
-    }
-
-    if (!values.confirmPassword) {
-      errors.confirmPassword = "please re-enter your password";
-    } else if (values.password !== values.confirmPassword) {
-      errors.confirmPassword = "not matching ";
-    }
-   
-    return errors;
-  };
+    }),
+    onSubmit:values =>{
+      alert(JSON.stringify(values,null ,2))
+    },
+  });
+ 
+  
 
   return (
     <div className="register">
       <h1>Register</h1>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="form" onSubmit={formik.handleSubmit}>
         <FormGroup
           label="Username"
           type="text"
           id="username"
-          value={values.username}
+          value={formik.values.username}
           name="username"
           placeholder="Username"
-          onChange={handleChange}
+          onChange={formik.handleChange}
+          errors={formik.errors.username}
         />
-        {errors.username && (
-          <div style={{ color: "red" }}>{errors.username}</div>
-        )}
+
         <FormGroup
           label="First Name"
           type="text"
           id="firstName"
-          value={values.firstName}
+          value={formik.values.firstName}
           name="firstName"
           placeholder="First Name"
-          onChange={handleChange}
+          onChange={formik.handleChange}
+          errors={ formik.errors.firstName}
         />
-        {errors.firstName && (
-          <div style={{ color: "red" }}>{errors.firstName}</div>
-        )}
+
         <FormGroup
           label="Last Name"
           type="text"
           id="lastName"
-          value={values.lastName}
+          value={formik.values.lastName}
           name="lastName"
           placeholder="last Name"
-          onChange={handleChange}
+          onChange={formik.handleChange}
+          errors={formik.errors.lastName}
         />
-        {errors.lastName && (
-          <div style={{ color: "red" }}>{errors.lastName}</div>
-        )}
+
         <div className="label">
           <label>Gender</label>
         </div>
-        <div className="gender " onClick={handleChange}>
+        <div className="gender " onClick={formik.handleChange}>
           <input type="radio" name="gender" value="male" />
           Male
           <input type="radio" name="gender" value="female" />
           Female
         </div>
-        {errors.gender && <div style={{ color: "red" }}>{errors.gender}</div>}
+        {formik.errors.gender && <div style={{ color: "red" }}>{formik.errors.gender}</div>}
 
         <FormGroup
           label="Password"
           type="password"
           id="password"
-          value={values.password}
+          value={formik.values.password}
           name="password"
           placeholder="Password"
-          onChange={handleChange}
+          onChange={formik.handleChange}
+          errors={formik.errors.password}
         />
-        {errors.password && (
-          <div style={{ color: "red" }}>{errors.password}</div>
-        )}
+
         <FormGroup
           label="Confirm Password"
           type="password"
-          id="password"
-          value={values.password}
-          name="password"
+          id="confirmPassword"
+          value={formik.values.confirmPassword}
+          name="confirmPassword"
           placeholder="Confirm Password"
-          onChange={handleChange}
+          onChange={formik.handleChange}
+          errors={formik.errors.confirmPassword}
         />
-        {errors.confirmPassword && (
-          <div style={{ color: "red" }}>{errors.confirmPassword}</div>
-        )}
+
         <Button label="Register" />
       </form>
     </div>

@@ -17,7 +17,7 @@ function FormGroup(props) {
           placeholder={props.placeholder}
           onChange={props.onchange}
         />
-     
+        {props.errors && <p style={{ color: "red" }}>{props.errors}</p>}
     </div>
   );
 }

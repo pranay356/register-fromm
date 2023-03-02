@@ -17,16 +17,21 @@
     padding-top: 20px;
     padding-left: 40px;
   }
-  
-  .login form .button {
-    padding-top: 30px;
+  .login form label{
+    font-size: 20px;
+    color: white;
+    display: block;
+    padding-bottom: 10px;
   }
-  .login form .button button{
+  .login form input{
     height: 40px;
     width: 300px;
     background-color: rgb(65, 64, 64);
     color: white;
     font-size: 20px;
-    border-radius: 5px;
-  
+    border-radius: 5px; 
+    margin-bottom: 10px;
+
   }
+  
+  

@@ -1,73 +1,62 @@
 import React from "react";
-import { useState } from "react";
-import FormGroup from "../../components/Form/formGroup"
+import FormGroup from "../../components/Form/formGroup";
 import Button from "../../components/Button/button";
 import "./login.css";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 function Login() {
-  const [values, setValues] = useState({
-    username: "",
-    password: "",
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      username: Yup.string()
+        .min (5, "username minimum 5 characters ")
+        .max(20,"username maximum 20 characters ")
+        .required('Required'),
+      password: Yup.string().min(7, 'password must be 7 characters')
+      .max(20,"password maximum 20 character").required('Required'),
+       
+    }),
+    onSubmit: values => {
+      alert(JSON.stringify(values, null, 2));
+    },
   });
-  const [errors, setErrors] = useState({
-    username: "",
-    password: "",
-  });
-  const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setErrors(Validation(values));
-  };
-  const Validation = (values) => {
-    let errors = {};
-    if (!values.username) {
-      errors.username = "please enter a username";
-    } else if (values.username.length < 5) {
-      errors.username = "username must be at least 5 characters";
-    } else if (values.username.length >= 5) {
-      errors.username = "great";
-    }
-
-    if (!values.password) {
-      errors.password = "please enter a password";
-    } else if (values.username.length < 9) {
-      errors.password = "password must be at least 9 characters";
-    } else if (values.password.length >= 9) {
-      errors.password = "great";
-    }
-    return errors;
-  };
+ 
   return (
     <div className="login">
       <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <FormGroup
-          label="username"
-          type="text"
-          id="username"
-          value={values.username}
-          name="username"
-          placeholder="Username"
-          onChange={handleChange}
-        />
+    
+        <form onSubmit={formik.handleSubmit}>
+          <FormGroup
+            label="username"
+            type="text"
+            id="username"
+            value={formik.values.username}
+            name="username"
+            placeholder="Username"
+            onChange={formik.handleChange}
+            errors={formik.errors.username}
+          />
+         
 
-       
-        {errors.username && <p style={{ color: "red" }}>{errors.username}</p>}
+          <FormGroup
+            label="password"
+            type="password"
+            id="password"
+            value={formik.values.Password}
+            name="password"
+            placeholder="password"
+            onChange={formik.handleChange}
+            errors={formik.errors.password}
+          />
+         
 
-        <FormGroup
-          label="password"
-          type="password"
-          id="password"
-          value={values.Password}
-          name="password"
-          placeholder="password"
-          onChange={handleChange}
-        />
-        {errors.password && <p style={{ color: "red" }}>{errors.password}</p>}
-        <Button label="Login"/>
-      </form>
+          <Button label="Login" />
+        </form>
+  
     </div>
   );
 }
